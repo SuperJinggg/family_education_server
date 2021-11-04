@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="website.abyss.familyeducationserver.mapper.ReserveMapper">
+  <resultMap id="BaseResultMap" type="website.abyss.familyeducationserver.entities.Reserve">
+    <constructor>
+      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="par_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="teacher_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="teacher_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="subject" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="start_date" javaType="java.sql.Date" jdbcType="DATE" />
+      <arg column="end_date" javaType="java.sql.Date" jdbcType="DATE" />
+    </constructor>
+  </resultMap>
+  <insert id="makeReserve" parameterType="website.abyss.familyeducationserver.entities.Reserve">
+    insert into reserve (par_phone,teacher_phone,teacher_name,subject,start_date,end_date) values (#{parPhone},#{teacherPhone},#{teacherName},#{subject},#{startDate},#{endDate})
+  </insert>
+  <select id="ReserveList" parameterType="java.lang.String" resultType="website.abyss.familyeducationserver.entities.Reserve">
+    select * from reserve where teacher_phone = #{teacherPhone}
+  </select>
+  <select id="verifyReserve" parameterType="website.abyss.familyeducationserver.entities.Reserve" resultType="website.abyss.familyeducationserver.entities.Reserve">
+    select * from reserve where par_phone = #{parPhone} and (#{startDate} between start_date and end_date or #{endDate} between start_date and end_date)
+  </select>
+  <delete id="deleteReserve" parameterType="java.lang.Integer">
+    delete from reserve where id = #{id}
+  </delete>
+  <select id="myReserveList" parameterType="string" resultType="website.abyss.familyeducationserver.entities.Reserve">
+    select *from reserve where par_phone = #{parPhone}
+  </select>
+</mapper>

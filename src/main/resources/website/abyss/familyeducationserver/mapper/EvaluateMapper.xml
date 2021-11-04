@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="website.abyss.familyeducationserver.mapper.EvaluateMapper">
+  <resultMap id="BaseResultMap" type="website.abyss.familyeducationserver.entities.Evaluate">
+    <constructor>
+      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="par_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="teacher_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="teacher_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="dates" javaType="java.sql.Date" jdbcType="DATE" />
+      <arg column="subject" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <insert id="makeEvaluate" parameterType="website.abyss.familyeducationserver.entities.Evaluate">
+    insert into evaluate (par_phone,teacher_phone,teacher_name,content,dates,subject) values (#{parPhone},#{teacherPhone},#{teacherName},#{content},#{dates},#{subject})
+  </insert>
+  <delete id="deleteEvaluate" parameterType="java.lang.Integer">
+    delete from evaluate where id = #{id}
+  </delete>
+  <select id="teacherEvaluateList" parameterType="java.lang.String" resultType="website.abyss.familyeducationserver.entities.Evaluate">
+    select * from evaluate where teacher_phone = #{teacherPhone}
+  </select>
+  <select id="myEvaluateList" parameterType="java.lang.String" resultType="website.abyss.familyeducationserver.entities.Evaluate">
+    select * from evaluate where par_phone = #{parPhone}
+  </select>
+</mapper>

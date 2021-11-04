@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="website.abyss.familyeducationserver.mapper.PlanMapper">
+  <resultMap id="BaseResultMap" type="website.abyss.familyeducationserver.entities.Plan">
+    <constructor>
+      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="par_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="plan_content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="start_date" javaType="java.sql.Date" jdbcType="DATE" />
+      <arg column="end_date" javaType="java.sql.Date" jdbcType="DATE" />
+    </constructor>
+  </resultMap>
+  <select id="todayPlanList" parameterType="java.util.Map" resultType="website.abyss.familyeducationserver.entities.Plan">
+    select * from plan where par_phone = #{parPhone} and #{now} &lt;= end_date
+  </select>
+  <select id="verifyPlan" parameterType="website.abyss.familyeducationserver.entities.Plan" resultType="website.abyss.familyeducationserver.entities.Plan">
+    select * from plan where (#{startDate} between start_date and end_date or #{endDate} between start_date and end_date) and par_phone = #{parPhone}
+  </select>
+  <insert id="makePlan" parameterType="website.abyss.familyeducationserver.entities.Plan">
+    insert into plan (par_phone,plan_content,start_date,end_date) values(#{parPhone},#{planContent},#{startDate},#{endDate})
+  </insert>
+  <delete id="cleanPlan" parameterType="java.util.Map">
+    delete from plan where par_phone = #{parPhone} and end_date &lt;= #{theDay}
+  </delete>
+  <select id="myPlanList" parameterType="java.lang.String" resultType="website.abyss.familyeducationserver.entities.Plan">
+    select * from plan where par_phone = #{parPhone}
+  </select>
+  <delete id="deletePlan" parameterType="java.lang.Integer">
+    delete from plan where id = #{id}
+  </delete>
+</mapper>

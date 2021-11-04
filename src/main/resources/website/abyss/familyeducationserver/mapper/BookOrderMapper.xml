@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="website.abyss.familyeducationserver.mapper.BookOrderMapper">
+  <resultMap id="BaseResultMap" type="website.abyss.familyeducationserver.entities.BookOrder">
+    <constructor>
+      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="par_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="book_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="counts" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="price" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="states" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <insert id="orderBook" parameterType="website.abyss.familyeducationserver.entities.BookOrder">
+    insert into book_order (par_phone,book_name,counts,price,states) values (#{parPhone},#{bookName},#{counts},#{price},#{states})
+  </insert>
+  <delete id="cancelOrder" parameterType="java.lang.Integer">
+    delete from book_order where id = #{id}
+  </delete>
+  <select id="myOrderList" parameterType="java.lang.String" resultType="website.abyss.familyeducationserver.entities.BookOrder">
+    select * from book_order where par_phone = #{parPhone}
+  </select>
+
+</mapper>

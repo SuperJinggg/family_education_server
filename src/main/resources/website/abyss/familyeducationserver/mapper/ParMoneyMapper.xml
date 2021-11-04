@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="website.abyss.familyeducationserver.mapper.ParMoneyMapper">
+  <resultMap id="BaseResultMap" type="website.abyss.familyeducationserver.entities.ParMoney">
+    <constructor>
+      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="par_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="balance" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="website.abyss.familyeducationserver.entities.ParMoney">
+    insert into par_money (par_phone, balance, point)
+    values (#{parPhone,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE}, #{point,jdbcType=INTEGER})
+  </insert>
+  <select id="myMoney" parameterType="string" resultType="website.abyss.familyeducationserver.entities.ParMoney">
+    select * from par_money where par_phone = #{parPhone}
+  </select>
+  <update id="recharge" parameterType="website.abyss.familyeducationserver.entities.ParMoney">
+    update par_money set balance = #{balance},point = #{point} where par_phone = #{parPhone}
+  </update>
+</mapper>

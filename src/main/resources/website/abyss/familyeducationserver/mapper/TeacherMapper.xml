@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="website.abyss.familyeducationserver.mapper.TeacherMapper">
+  <resultMap id="BaseResultMap" type="website.abyss.familyeducationserver.entities.Teacher">
+    <constructor>
+      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="teacher_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="teacher_sex" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="teacher_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="teacher_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="teacher_icon" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="teacher_exper" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="subject" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="grade" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <select id="teacherList" resultType="website.abyss.familyeducationserver.entities.Teacher">
+    select * from teacher
+  </select>
+  <select id="findTeacherByName" resultType="website.abyss.familyeducationserver.entities.Teacher">
+    select * from teacher where teacher_name = #{teacherName}
+  </select>
+  <select id="findTeacherByPhone" resultType="website.abyss.familyeducationserver.entities.Teacher">
+    select * from teacher where teacher_phone = #{teacherPhone}
+  </select>
+  <select id="findTeacherByGrade" resultType="website.abyss.familyeducationserver.entities.Teacher">
+    <bind name="keyword1" value="'%' + grade + '%'"/>
+    select * from teacher where grade like #{keyword1}
+  </select>
+  <select id="findTeacherBySubject" resultType="website.abyss.familyeducationserver.entities.Teacher">
+    <bind name="keyword2" value="'%' + subject + '%'"/>
+    select * from teacher where subject like #{keyword2}
+  </select>
+  <select id="findTeacherBySubjectAndGrade" resultType="website.abyss.familyeducationserver.entities.Teacher">
+    <bind name="keyword1" value="'%' + grade + '%'"/>
+    <bind name="keyword2" value="'%' + subject + '%'"/>
+    select * from teacher where grade like #{keyword1} and subject like #{keyword2}
+  </select>
+  <insert id="insertSelective" parameterType="website.abyss.familyeducationserver.entities.Teacher">
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="teacherName != null">
+        teacher_name,
+      </if>
+      <if test="teacherSex != null">
+        teacher_sex,
+      </if>
+      <if test="teacherPhone != null">
+        teacher_phone,
+      </if>
+      <if test="teacherAddress != null">
+        teacher_address,
+      </if>
+      <if test="teacherIcon != null">
+        teacher_icon,
+      </if>
+      <if test="teacherExper != null">
+        teacher_exper,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="teacherName != null">
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherSex != null">
+        #{teacherSex,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherPhone != null">
+        #{teacherPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherAddress != null">
+        #{teacherAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherIcon != null">
+        #{teacherIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherExper != null">
+        #{teacherExper,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
